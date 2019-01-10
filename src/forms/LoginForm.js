@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { observer } from "mobx-react";
 
 // Store
 import authStore from "../stores/authStore";
@@ -21,6 +22,8 @@ class Login extends Component {
 
   render() {
     const { username, password } = this.state;
+
+    if (authStore.user) return <Redirect to="/" />;
     return (
       <div className="col-6 mx-auto">
         <div className="card my-5">
@@ -64,4 +67,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default observer(Login);
