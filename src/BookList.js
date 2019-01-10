@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 
 // Components
-import Loading from "./Loading";
 import SearchBar from "./SearchBar";
 import BookTable from "./BookTable";
 
