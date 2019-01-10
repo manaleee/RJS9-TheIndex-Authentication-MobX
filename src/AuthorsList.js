@@ -8,6 +8,7 @@ import AddAuthorCard from "./AddAuthorCard";
 
 // Store
 import authorStore from "./stores/AuthorStore";
+import authStore from "./stores/authStore";
 
 const AuthorsList = () => {
   const authorCards = authorStore.filteredAuthors.map(author => (
@@ -15,11 +16,11 @@ const AuthorsList = () => {
   ));
 
   return (
-    <div className="authors">
+    <div>
       <h3>Authors</h3>
       <SearchBar store={authorStore} />
       <div className="row">
-        <AddAuthorCard />
+        {authStore.user && <AddAuthorCard />}
         {authorCards}
       </div>
     </div>
