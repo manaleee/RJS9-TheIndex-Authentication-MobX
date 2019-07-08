@@ -5,6 +5,12 @@ import { observer } from "mobx-react";
 // Logo
 import logo from "./assets/theindex.svg";
 
+// Store
+import authStore from "./stores/authStore";
+
+// Components
+import Logout from "./Logout";
+
 const Sidebar = () => {
   return (
     <div id="sidebar">
