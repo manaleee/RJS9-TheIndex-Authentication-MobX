@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { observer } from "../node_modules/mobx-react";
 
-const BookRow = props => {
-  const book = props.book;
+const BookRow = ({ book }) => {
   const authors = book.authors.map(author => (
     <div key={author.name}>
       <Link to={`/authors/${author.id}`}>{author.name}</Link>

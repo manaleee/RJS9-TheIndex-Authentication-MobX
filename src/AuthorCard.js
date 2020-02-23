@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const AuthorCard = props => {
-  const author = props.author;
+const AuthorCard = ({ author }) => {
   return (
     <div className="col-lg-4 col-md-6 col-12">
       <Link to={`/authors/${author.id}`} className="card">
