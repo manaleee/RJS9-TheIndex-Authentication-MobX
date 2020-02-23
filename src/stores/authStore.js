@@ -44,6 +44,19 @@ class AuthStore {
   logout = () => {
     this.setUser();
   };
+
+  checkForToken = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const currentTime = Date.now() / 1000;
+      const user = jwt_decode(token);
+      if (user.exp >= currentTime) {
+        this.setUser(token);
+      } else {
+        this.logout();
+      }
+    }
+  };
 }
 
 decorate(AuthStore, {
@@ -51,6 +64,6 @@ decorate(AuthStore, {
 });
 
 const authStore = new AuthStore();
-// authStore.checkForToken();
+authStore.checkForToken();
 
 export default authStore;
