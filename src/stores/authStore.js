@@ -1,51 +1,49 @@
 import { decorate, observable } from "mobx";
-import axios from "axios";
 import jwt_decode from "jwt-decode";
+import { instance } from "./instance";
 
 const instance = axios.create({
   baseURL: "https://the-index-api.herokuapp.com"
 });
 
 class AuthStore {
-  constructor() {
-    this.user = null;
-  }
+  user = null;
 
-  checkForToken() {
-    this.setUser(localStorage.getItem("token"));
-  }
-
-  setUser(token) {
+  setUser = token => {
     if (token) {
       this.user = jwt_decode(token);
-      axios.defaults.headers.common.Authorization = `jwt ${token}`;
+      instance.defaults.headers.common.Authorization = `jwt ${token}`;
       localStorage.setItem("token", token);
     } else {
       this.user = null;
-      delete axios.defaults.headers.common.Authorization;
+      delete instance.defaults.headers.common.Authorization;
       localStorage.removeItem("token");
     }
-  }
+  };
 
-  signup(newUser) {
-    instance
-      .post("/signup/", newUser)
-      .then(res => res.data)
-      .then(user => this.setUser(user.token))
-      .catch(err => console.error(err.response.data));
-  }
+  signup = async newUser => {
+    try {
+      const res = await instance.post("/signup/", newUser);
+      const user = res.data;
+      this.setUser(user.token);
+    } catch (err) {
+      console.error(err.response.data);
+    }
+  };
 
-  login(newUser) {
-    instance
-      .post("/login/", newUser)
-      .then(res => res.data)
-      .then(user => this.setUser(user.token))
-      .catch(err => console.error(err.response.data));
-  }
+  login = async newUser => {
+    try {
+      const res = await instance.post("/login/", newUser);
+      const user = res.data;
+      this.setUser(user.token);
+    } catch (err) {
+      console.error(err.response.data);
+    }
+  };
 
-  logout() {
+  logout = () => {
     this.setUser();
-  }
+  };
 }
 
 decorate(AuthStore, {
@@ -53,6 +51,6 @@ decorate(AuthStore, {
 });
 
 const authStore = new AuthStore();
-authStore.checkForToken();
+// authStore.checkForToken();
 
 export default authStore;
