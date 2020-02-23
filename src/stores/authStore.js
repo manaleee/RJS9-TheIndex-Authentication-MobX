@@ -2,10 +2,6 @@ import { decorate, observable } from "mobx";
 import jwt_decode from "jwt-decode";
 import { instance } from "./instance";
 
-const instance = axios.create({
-  baseURL: "https://the-index-api.herokuapp.com"
-});
-
 class AuthStore {
   user = null;
 
@@ -53,7 +49,7 @@ class AuthStore {
       if (user.exp >= currentTime) {
         this.setUser(token);
       } else {
-        this.logout();
+        this.setUser();
       }
     }
   };
