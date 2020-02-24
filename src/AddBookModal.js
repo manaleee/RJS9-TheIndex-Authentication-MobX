@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 
 import BookForm from "./forms/BookForm";
 import Modal from "react-responsive-modal";
+import authStore from "./stores/authStore";
 
 class AddBookModal extends Component {
   state = {
@@ -13,6 +15,7 @@ class AddBookModal extends Component {
   onCloseModal = () => this.setState({ open: false });
 
   render() {
+    if (!authStore.user) return <Redirect to="/signup"></Redirect>;
     const { open } = this.state;
     return (
       <div>

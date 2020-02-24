@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import Modal from "react-responsive-modal";
+import { Redirect } from "react-router-dom";
 
 import AuthorForm from "./forms/AuthorForm";
+import authStore from "./stores/authStore";
 
 class AddAuthorCard extends Component {
   state = {
@@ -13,6 +15,7 @@ class AddAuthorCard extends Component {
   onCloseModal = () => this.setState({ open: false });
 
   render() {
+    if (!authStore.user) return <Redirect to="/signup"></Redirect>;
     const { open } = this.state;
     return (
       <div className="col-lg-4 col-md-6 col-12">

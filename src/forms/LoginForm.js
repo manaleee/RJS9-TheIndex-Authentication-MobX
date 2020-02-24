@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import authStore from "../stores/authStore";
+import { observer } from "mobx-react";
 
 class Login extends Component {
   state = {
@@ -13,10 +15,12 @@ class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    alert("I DON'T WORK YET");
+    // alert("I DON'T WORK YET");
+    authStore.loginUser(this.state);
   };
 
   render() {
+    if (authStore.user) return <Redirect to="/" />;
     const { username, password } = this.state;
     return (
       <div className="col-6 mx-auto">
@@ -61,4 +65,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default observer(Login);
